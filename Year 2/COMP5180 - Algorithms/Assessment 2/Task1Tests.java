@@ -3,6 +3,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.HashSet;
 
 import org.junit.Before;
 
@@ -12,7 +13,7 @@ import org.junit.Before;
  * Passing these tests is not a guarantee that your solution is completely correct
  * and there is no guarantee that these tests are correct.
  * 
- * @author lb851 
+ * @author lb851 & Sean Chan
  */
 public class Task1Tests {
 
@@ -58,6 +59,47 @@ public class Task1Tests {
                 """;
         assertEquals(expectedOutput.replaceAll("\\s+", ""), output.replaceAll("\\s+", ""));
     }
+
+    @Test
+	public void SeanLikesGoTrue(){
+		Task2 t2 = new Task2();
+		HashSet<String> strings = new HashSet<String>();
+		strings.add("Sean");
+		strings.add("Likes");
+		strings.add("Go");
+		strings.add("SeanLikesGo");
+		t2.setStrings(strings);
+		boolean output = t2.stringSum();
+		Assert.assertEquals(true, output);
+	}
+
+    	@Test
+	public void SeanLikesGoFalse(){
+		Task2 t2 = new Task2();
+		HashSet<String> strings = new HashSet<String>();
+		strings.add("Sean");
+		strings.add("Likes");
+		strings.add("go");
+		strings.add("SeanLikesGo");
+		t2.setStrings(strings);
+		boolean output = t2.stringSum();
+		Assert.assertEquals(false, output);
+	}
+
+    @Test 
+	public void LucaLikesRustTrue(){
+		Task2 t2 = new Task2();
+		HashSet<String> strings = new HashSet<String>();
+		strings.add("l");
+		strings.add("uca");
+		strings.add("luca");	
+		strings.add("likes");
+		strings.add("rust");
+		strings.add("lucalikesrust");
+		t2.setStrings(strings);
+		boolean output = t2.stringSum();
+		Assert.assertEquals(true, output);
+	}
 
     @Test
     public void testHeight3() {

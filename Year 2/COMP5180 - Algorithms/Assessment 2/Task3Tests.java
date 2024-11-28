@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Passing these tests is not a guarantee that your solution is completely correct
  * and there is no guarantee that these tests are correct.
  * 
- * @author lb851 
+ * @author lb851 & Sean CHAN
  */
 public class Task3Tests {
 
