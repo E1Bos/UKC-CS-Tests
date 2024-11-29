@@ -116,25 +116,25 @@ public class Task2Tests {
 
     @Test
     public void SeanLikesGoTrue() {
-        HashSet<String> strings = new HashSet<String>(Set.of("Sean", "Likes", "Go", "SeanLikesGo"));
+        HashSet<String> strings = new HashSet<>(Set.of("Sean", "Likes", "Go", "SeanLikesGo"));
         solution.setStrings(strings);
         boolean output = solution.stringSum();
-        Assert.assertEquals(true, output);
+        assertEquals(true, output);
     }
 
     @Test
     public void SeanLikesGoFalse() {
-        HashSet<String> strings = new HashSet<String>(Set.of("Sean", "Likes", "go", "SeanLikesGo"));
+        HashSet<String> strings = new HashSet<>(Set.of("Sean", "Likes", "go", "SeanLikesGo"));
         solution.setStrings(strings);
         boolean output = solution.stringSum();
-        Assert.assertEquals(false, output);
+        assertEquals(false, output);
     }
 
     @Test
     public void LucaLikesRustTrue() {
-        HashSet<String> strings = new HashSet<String>(Set.of("l", "uca", "luca", "likes", "rust", "lucalikesrust"));
+        HashSet<String> strings = new HashSet<>(Set.of("l", "uca", "luca", "likes", "rust", "lucalikesrust"));
         solution.setStrings(strings);
         boolean output = solution.stringSum();
-        Assert.assertEquals(true, output);
+        assertEquals(true, output);
     }
 }
