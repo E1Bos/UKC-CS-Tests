@@ -6,10 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests for Task 2 of the Algorithms A2 assignment
  * 
- * Passing these tests is not a guarantee that your solution is completely correct
+ * Passing these tests is not a guarantee that your solution is completely
+ * correct
  * and there is no guarantee that these tests are correct.
  * 
- * @author lb851 
+ * @author lb851 & Sean Chan
  */
 public class Task2Tests {
 
@@ -84,32 +85,56 @@ public class Task2Tests {
         solution.setStrings(strings);
         assertTrue(solution.stringSum());
     }
-    
+
     @Test
     public void testWithSpaces() {
         HashSet<String> strings = new HashSet<>(Set.of(" ", "  ", "   "));
         solution.setStrings(strings);
         assertTrue(solution.stringSum());
     }
-    
+
     @Test
     public void testEmptyStringWithSpaces() {
         HashSet<String> strings = new HashSet<>(Set.of("", " ", "  "));
         solution.setStrings(strings);
         assertFalse(solution.stringSum());
     }
-    
+
     @Test
     public void testEmptyStringwithWords() {
         HashSet<String> strings = new HashSet<>(Set.of("", "hello", "world"));
         solution.setStrings(strings);
         assertFalse(solution.stringSum());
     }
-    
+
     @Test
     public void testWordsWithSpaces() {
         HashSet<String> strings = new HashSet<>(Set.of("Hello ", "World", "Hello World"));
         solution.setStrings(strings);
         assertTrue(solution.stringSum());
+    }
+
+    @Test
+    public void SeanLikesGoTrue() {
+        HashSet<String> strings = new HashSet<String>(Set.of("Sean", "Likes", "Go", "SeanLikesGo"));
+        solution.setStrings(strings);
+        boolean output = solution.stringSum();
+        Assert.assertEquals(true, output);
+    }
+
+    @Test
+    public void SeanLikesGoFalse() {
+        HashSet<String> strings = new HashSet<String>(Set.of("Sean", "Likes", "go", "SeanLikesGo"));
+        solution.setStrings(strings);
+        boolean output = solution.stringSum();
+        Assert.assertEquals(false, output);
+    }
+
+    @Test
+    public void LucaLikesRustTrue() {
+        HashSet<String> strings = new HashSet<String>(Set.of("l", "uca", "luca", "likes", "rust", "lucalikesrust"));
+        solution.setStrings(strings);
+        boolean output = solution.stringSum();
+        Assert.assertEquals(true, output);
     }
 }
