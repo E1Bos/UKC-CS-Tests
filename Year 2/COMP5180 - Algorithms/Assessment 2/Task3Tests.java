@@ -4,7 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests for Task 3 of the Algorithms A2 assignment
  * 
- * Passing these tests is not a guarantee that your solution is completely correct
+ * Passing these tests is not a guarantee that your solution is completely
+ * correct
  * and there is no guarantee that these tests are correct.
  * 
  * @author lb851 & Sean CHAN
@@ -37,7 +38,8 @@ public class Task3Tests {
 
     @Test
     public void testComplexGrid() {
-        int[][] map = new int[][] { new int[] { 0, 1, 1, 0, 0 },
+        int[][] map = new int[][] {
+                new int[] { 0, 1, 1, 0, 0 },
                 new int[] { 2, 0, 0, 0, 0 },
                 new int[] { 0, 0, 3, 1, 0 },
                 new int[] { 1, 0, 0, 1, 0 },
@@ -48,7 +50,8 @@ public class Task3Tests {
 
     @Test
     public void testNonSquareGrid() {
-        int[][] map = new int[][] { new int[] { 0, 1, 1, 0, 0 },
+        int[][] map = new int[][] {
+                new int[] { 0, 1, 1, 0, 0 },
                 new int[] { 2, 0, 0, 0, 0 },
                 new int[] { 0, 0, 1, 1, 0 },
                 new int[] { 1, 0, 0, 3, 0 },
@@ -62,7 +65,8 @@ public class Task3Tests {
 
     @Test
     public void testNonSquareGrid2() {
-        int[][] map = new int[][] { new int[] { 0, 1, 1, 0, 0, 0, 1, 2, 1 },
+        int[][] map = new int[][] {
+                new int[] { 0, 1, 1, 0, 0, 0, 1, 2, 1 },
                 new int[] { 0, 0, 0, 0, 0, 0, 1, 2, 1 },
                 new int[] { 0, 1, 0, 0, 1, 0, 0, 0, 0 },
                 new int[] { 0, 1, 2, 1, 0, 0, 1, 0, 1 },
@@ -72,6 +76,18 @@ public class Task3Tests {
                 new int[] { 0, 1, 1, 0, 0, 0, 1, 2, 1 } };
         solution.setMap(map);
         assertEquals(16, solution.dig(8));
+    }
+
+    @Test
+    public void testAbnormallySizedGrid() {
+        int[][] map = new int[][] {
+                new int[] { 0, 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0, 0, 83 } };
+        solution.setMap(map);
+        assertEquals(415, solution.dig(10));
     }
 
     // Running this without memoization or a cache is not recommended.
