@@ -12,6 +12,7 @@ import java.io.StringWriter;
  * and there is no guarantee that these tests are correct.
  * 
  * @author lb851 & Sean Chan
+ * @version 1.1
  */
 public class RunTest {
 
@@ -148,7 +149,7 @@ public class RunTest {
 
 		isEqual(input, expected);
 	}
-	
+
 	@Test
 	public void testInvalidAInst3() {
 		String input = """
@@ -232,7 +233,7 @@ public class RunTest {
 	public void testAInstAndCInst() {
 		String input = """
 				ldr A, $1
-				ldr (A), A
+				ldr D, A
 				jgt D
 				ldr D, A
 				jmp
@@ -241,7 +242,7 @@ public class RunTest {
 
 		String expected = """
 				0000000000000001
-				1110110000100000
+				1110110000010000
 				1110001100000001
 				1110110000010000
 				1110101010000111
@@ -277,18 +278,19 @@ public class RunTest {
 		String input = """
 				ldr D, A
 				ldr D, D
-				ldr (A), A
-				ldr (A), D
+				ldr D, (A)
 				ldr A, A
-				ldr A, D""";
+				ldr A, D
+				ldr A, (A)
+				""";
 
 		String expected = """
 				1110110000010000
 				1110001100010000
+				1111110000010000
 				1110110000100000
 				1110001100100000
-				1110110000100000
-				1110001100100000""";
+				1111110000100000""";
 
 		isEqual(input, expected);
 	}
@@ -392,7 +394,7 @@ public class RunTest {
 	public void testLongInput() {
 		String input = """
 				ldr A, $4
-				ldr (A), A
+				ldr A, (A)
 				jlt D
 				ldr D, (A)
 				jmp
@@ -425,7 +427,7 @@ public class RunTest {
 
 		String expected = """
 				0000000000000100
-				1110110000100000
+				1111110000100000
 				1110001100000100
 				1111110000010000
 				1110101010000111
@@ -454,7 +456,7 @@ public class RunTest {
 				1110000010010000
 				0000000000010000
 				1110001100001000
-								""";
+				""";
 
 		isEqual(input, expected);
 	}
