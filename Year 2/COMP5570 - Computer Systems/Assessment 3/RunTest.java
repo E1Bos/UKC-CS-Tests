@@ -391,6 +391,25 @@ public class RunTest {
 	}
 
 	@Test
+	public void testParseAndThenError() {
+		String input = """
+				ldr A, $0
+				ldr D, A
+				add D, D, A
+				ldr (A), D
+				ldr D, A
+				""";
+
+		String expected = """
+				0000000000000000
+				1110110000010000
+				1110000010010000
+				""";
+
+		isEqual(input, expected);
+	}
+
+	@Test
 	public void testLongInput() {
 		String input = """
 				ldr A, $4
