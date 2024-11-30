@@ -7,6 +7,6 @@
 </div>
 <br>
 
-This repo will contain all student-made tests for the 2023-2026 assessments. Test are sorted by year, module, and assignment.
+This repo contains student-made tests for the 2023-2026 CS assessments at UKC. Test are sorted by year, module, and assignment.
 
 > Note that passing these tests does not guarantee a 100% mark, although they are a good starting point. Coding style, efficiency, and organization are all factors that may affect your final grade.
