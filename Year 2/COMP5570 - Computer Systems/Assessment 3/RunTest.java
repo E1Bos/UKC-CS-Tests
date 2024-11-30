@@ -198,7 +198,7 @@ public class RunTest {
 	@Test
 	public void testCInst() {
 		String input = """
-				ldr D, (A)
+				ldr D, A
 				sub D, D, (A)
 				jgt D
 				ldr D, (A)
@@ -207,7 +207,7 @@ public class RunTest {
 				""";
 
 		String expected = """
-				1111110000010000
+				1110110000010000
 				1111010011010000
 				1110001100000001
 				1111110000010000
@@ -223,7 +223,7 @@ public class RunTest {
 				ldr A, $1
 				ldr (A), A
 				jgt D
-				ldr D, (A)
+				ldr D, A
 				jmp
 				str (A), D
 				""";
@@ -232,7 +232,7 @@ public class RunTest {
 				0000000000000001
 				1110110000100000
 				1110001100000001
-				1111110000010000
+				1110110000010000
 				1110101010000111
 				1110001100001000""";
 
@@ -242,19 +242,19 @@ public class RunTest {
 	@Test
 	public void testCInstWithWhiteSpaces() {
 		String input = """
-				ldr 	D, (A)
+				ldr 	D, A
 					sub	 D,    D,  (A)
 				jgt    D
-				ldr    D    ,    (A)
+				ldr    D    ,    A
 
 				str    (A),    D
 				""";
 
 		String expected = """
-				1111110000010000
+				1110110000010000
 				1111010011010000
 				1110001100000001
-				1111110000010000
+				1110110000010000
 				1110001100001000""";
 
 		isEqual(input, expected);
