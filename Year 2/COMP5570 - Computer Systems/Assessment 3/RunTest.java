@@ -148,6 +148,17 @@ public class RunTest {
 
 		isEqual(input, expected);
 	}
+	
+	@Test
+	public void testInvalidAInst3() {
+		String input = """
+				ldr A, 21
+				""";
+
+		String expected = "";
+
+		isEqual(input, expected);
+	}
 
 	@Test
 	public void testNegativeAInst() {
