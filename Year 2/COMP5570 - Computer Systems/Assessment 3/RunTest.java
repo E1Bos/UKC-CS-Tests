@@ -258,20 +258,24 @@ public class RunTest {
 				1110001100001000""";
 
 		isEqual(input, expected);
-	
+
 	}
 
 	@Test
 	public void testAllLdrCInst() {
 		String input = """
 				ldr D, A
-				ldr D, (A)
+				ldr D, D
 				ldr (A), A
-				ldr (A), D""";
+				ldr (A), D
+				ldr A, A
+				ldr A, D""";
 
 		String expected = """
 				1110110000010000
-				1111110000010000
+				1110001100010000
+				1110110000100000
+				1110001100100000
 				1110110000100000
 				1110001100100000""";
 
@@ -306,7 +310,7 @@ public class RunTest {
 	@Test
 	public void testAdd() {
 		String input = """
-				add (A), D, A
+				add A, D, A
 				add D, D, (A)
 				""";
 
@@ -320,7 +324,7 @@ public class RunTest {
 	@Test
 	public void testSub() {
 		String input = """
-				sub (A), D, A
+				sub A, D, A
 				sub D, D, (A)
 				""";
 
