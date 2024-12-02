@@ -1,16 +1,15 @@
 import java.util.HashSet;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for Task 2 of the Algorithms A2 assignment
  * 
- * Passing these tests is not a guarantee that your solution is completely
- * correct
- * and there is no guarantee that these tests are correct.
+ * Passing these tests is not a guarantee that your solution is correct.
  * 
  * @author lb851 & Sean Chan
+ * @version 1.1
  */
 public class Task2Tests {
 

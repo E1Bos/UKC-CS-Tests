@@ -1,5 +1,5 @@
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -7,12 +7,10 @@ import java.io.StringWriter;
 /**
  * Tests for the Computer Systems Assembler
  * 
- * Passing these tests is not a guarantee that your solution is completely
- * correct
- * and there is no guarantee that these tests are correct.
+ * Passing these tests is not a guarantee that your solution is correct.
  * 
  * @author lb851 & Sean Chan
- * @version 1.1
+ * @version 1.2
  */
 public class RunTest {
 

@@ -1,25 +1,25 @@
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import org.junit.Before;
 
 /**
  * Tests for Task 1 of the Algorithms A2 assignment
  * 
- * Passing these tests is not a guarantee that your solution is completely correct
- * and there is no guarantee that these tests are correct.
+ * Passing these tests is not a guarantee that your solution is correct.
  * 
  * @author lb851 & Sean Chan
+ * @version 1.1
  */
 public class Task1Tests {
 
     private final Task1 solution = new Task1();
     private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-    @Before
+    @BeforeEach
     public void setUp() {
 
         // Redirect the standard output to the ByteArrayOutputStream
