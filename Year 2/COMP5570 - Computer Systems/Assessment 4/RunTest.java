@@ -474,8 +474,8 @@ public class RunTest {
 
                     assessment a2 {
                         type = test-credit;
-                        title = "Ok im not gonna credit myself multiple times";
-                        weighting = 2%;
+                        title = "lb851";
+                        weighting = 212%;
                     }
                 }
                 """;
