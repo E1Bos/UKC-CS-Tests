@@ -3,12 +3,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests for the Computer Systems Parser
- * 
+ *
  * Passing these tests is not a guarantee that your solution is completely
  * correct.
- * 
+ *
  * @author lb851
- * @version 1.0
+ * @version 1.1
  */
 public class RunTest {
 
@@ -474,8 +474,8 @@ public class RunTest {
 
                     assessment a2 {
                         type = test-credit;
-                        title = "Ok im not gonna credit myself multiple times";
-                        weighting = 2%;
+                        title = "lb851";
+                        weighting = 212%;
                     }
                 }
                 """;
@@ -521,6 +521,71 @@ public class RunTest {
                         weighting = 2%;
                     }
                 }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void testMultipleLecturesKeywords() {
+        String input = """
+                lectures {
+                    lecture l1 {
+                        title = "Lecture 1";
+                    }
+                }
+
+                lectures {
+                    lecture l2 {
+                        title = "Lecture 2";
+                    }
+                }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void testMultipleClassesKeywords() {
+        String input = """
+                classes {
+                    class c1 {
+                        title = "Class 1";
+                        after = [l1];
+                    }
+                }
+
+                classes {
+                    class c2 {
+                        title = "Class 2";
+                        after = [l2];
+                    }
+                }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void testMultipleAssessmentsKeywords() {
+        String input = """
+                assessments {
+                    assessment a1 {
+                        type = assessment-test;
+                        title = "this is a nice passing test!";
+                        weighting = 2%;
+                        after = [c1];
+                    }
+                }   
+
+                assessments {
+                    assessment a1 {
+                        type = assessment-test;
+                        title = "whoops! another assessments keyword";
+                        weighting = 2%;
+                        after = [c1];
+                    }
+                } 
                 """;
         boolean expected = false;
         isExpectedValue(input, expected);
