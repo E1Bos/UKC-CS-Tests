@@ -1,0 +1,528 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+/**
+ * Tests for the Computer Systems Parser
+ * 
+ * Passing these tests is not a guarantee that your solution is completely
+ * correct.
+ * 
+ * @author lb851
+ * @version 1.0
+ */
+public class RunTest {
+
+    public static boolean parseInput(String input) {
+        Parser parser = new Parser(input);
+
+        return parser.parse();
+    }
+
+    public static void isExpectedValue(String input, boolean expected) {
+        boolean output = parseInput(input);
+
+        assertEquals(expected, output);
+    }
+
+    @Test
+    public void parseValidSingleClass() {
+        String input = """
+                classes {
+                                class c1 {
+                                    title = "Valid Single Class";
+                                    groups = 12;
+                                }
+                            }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseValidClassNoGroup() {
+        String input = """
+                classes {
+                    class c1 {
+                        title = "Valid Class 1";
+                        after = [A1];
+                    }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseValidClassGroupThenAfter() {
+        String input = """
+                classes {
+                    class c1 {
+                        title = "Valid Class 1";
+                        groups = 12;
+                        after = [A1];
+                    }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseValidClassAfterThenGroup() {
+        String input = """
+                classes {
+                    class c1 {
+                        title = "Valid Class 1";
+                        after = [A1];
+                        groups = 12;
+                    }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseInvalidClassDupeAfter() {
+        String input = """
+                classes {
+                    class c1 {
+                        title = "Class 1";
+                        after = [A1];
+                        groups = 12;
+                        after = [A2];
+                    }
+                }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseInvalidClassDupeGroups() {
+        String input = """
+                classes {
+                    class c1 {
+                        title = "Class 1";
+                        groups = 12;
+                        after = [A1];
+                        groups = 13;
+                    }
+                }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseInvalidClassOrder() {
+        String input = """
+                classes {
+                    class c1 {
+                        after = [A1];
+                        title = "Class 1";
+                        groups = 12;
+                    }
+                }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseInvalidSingleClass() {
+        String input = """
+                classes {
+                    class c1 {
+                        title = "No group :(";
+                    }
+                }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseValidMultipleClass() {
+        String input = """
+                classes {
+                    class c1 {
+                        title = "Valid Class 1";
+                        groups = 1;
+                    }
+
+                    class c2 {
+                        title = "Valid Class 2";
+                        groups = 2;
+                        }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseInvalidMultipleClass() {
+        String input = """
+                classes {
+                    class c1 {
+                        title = "Whoops! forgot a semicolon!"
+                    }
+
+                    class c2 {
+                        title = "Valid Class!!";
+                    }
+                }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseEmptyClasses() {
+        String input = """
+                classes {}
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseEmptyClass() {
+        String input = """
+                classes {
+                    class c1 {}
+                }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseEmptyLectures() {
+        String input = """
+                lectures {}
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseEmptyLecture() {
+        String input = """
+                lectures {
+                    lecture l1 {}
+                }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseValidLecture() {
+        String input = """
+                lectures {
+                    lecture l1 {
+                        title = "Lecture 1";
+                    }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseMultipleLecture() {
+        String input = """
+                lectures {
+                    lecture l1 {
+                        title = "Lecture 1";
+                    }
+
+                    lecture l2 {
+                        title = "Lecture 2";
+                    }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseInvalidLecture() {
+        String input = """
+                lectures {
+                    lecture l1 {
+                        title = "Lecture 1";
+                    }
+
+                    lecture l2 {
+                        title "Forgot equals sign";
+                    }
+                }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseEmptyAssessments() {
+        String input = """
+                assessments {}
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseEmptyAssessment() {
+        String input = """
+                assessments {
+                    assessment a1 {}
+                }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseValidAssessment() {
+        String input = """
+                assessments {
+                    assessment a1 {
+                        type = assessment-test;
+                        title = "Does this test pass?";
+                        weighting = 2%;
+                    }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseValidAssessmentWithAfter() {
+        String input = """
+                assessments {
+                    assessment a1 {
+                        type = assessment-test;
+                        title = "Hopefully this tests passes too!";
+                        weighting = 1%;
+                        after = [previousTest];
+                    }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseMultipleValidAssessment() {
+        String input = """
+                assessments {
+                    assessment a1 {
+                        type = assessment-test;
+                        title = "Does this test pass?";
+                        weighting = 2%;
+                    }
+
+                    assessment a2 {
+                        type = carefully-thought-out-type-two;
+                        title = "Does this test pass too?";
+                        weighting = 2%;
+                    }
+
+                    assessment a3 {
+                        type = some-other-test;
+                        title = "ANOTHER ASSESSMENT??";
+                        weighting = 101%;
+                    }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseMultipleValidAssessmentWithAfter() {
+        String input = """
+                assessments {
+                    assessment a1 {
+                        type = exam;
+                        title = "Exam";
+                        weighting = 101%;
+                        after = [lastModule];
+                    }
+                    assessment a2 {
+                        type = in-class-test;
+                        title = "Idk";
+                        weighting = 124%;
+                        after = [A2];
+                    }
+                    assessment a3 {
+                        type = worth-nothing;
+                        title = "Void";
+                        weighting = 0%;
+                    }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void testLectureWithAssessment() {
+        String input = """
+                lectures {
+                    lecture l1 {
+                        title = "Lecture 1";
+                    }
+                }
+                assessments {
+                    assessment a1 {
+                        type = assessment-test;
+                        title = "Does this test pass?";
+                        weighting = 2%;
+                        after = [l1];
+                    }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void testLectureWithClass() {
+        String input = """
+                lectures {
+                    lecture l1 {
+                        title = "Lecture 1";
+                    }
+                }
+                classes {
+                    class c1 {
+                        title = "Class 1";
+                        after = [l1];
+                    }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void testAllValid() {
+        String input = """
+                lectures {
+                    lecture l1 {
+                        title = "Lecture 1";
+                    }
+                }
+
+                classes {
+                    class c1 {
+                        title = "Class 1";
+                        after = [l1];
+                    }
+                }
+
+                assessments {
+                    assessment a1 {
+                        type = assessment-test;
+                        title = "amazon shopping";
+                        weighting = 2%;
+                        after = [c1];
+                    }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void testAllMultipleValid() {
+        String input = """
+                lectures {
+                    lecture l1 {
+                        title = "Lecture 1";
+                    }
+
+                    lecture l2 {
+                        title = "Lecture 2";
+                    }
+                }
+
+                classes {
+                    class c1 {
+                        title = "Class 1";
+                        after = [l1];
+                    }
+
+                    class c2 {
+                        title = "Class 2";
+                        groups = 12;
+                    }
+                }
+
+                assessments {
+                    assessment a1 {
+                        type = assessment-test;
+                        title = "speed eating";
+                        weighting = 2%;
+                        after = [c1];
+                    }
+
+                    assessment a2 {
+                        type = test-credit;
+                        title = "Ok im not gonna credit myself multiple times";
+                        weighting = 2%;
+                    }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void testAllWithInvalid() {
+        String input = """
+                lectures {
+                    lecture l1 {
+                        title = "Lecture 1";
+                    }
+
+                    lecture l2 {
+                        title = "Lecture 2";
+                    }
+                }
+
+                classes {
+                    class c1 {
+                        title = "Missing after or groups";
+                    }
+
+                    class c2 {
+                        title = "Class 2";
+                        groups = 12;
+                    }
+                }
+
+                assessments {
+                    assessment a1 {
+                        type = assessment-test;
+                        title = "speed eating";
+                        weighting = 2%;
+                        after = [c1];
+                    }
+
+                    assessment a2 {
+                        type = test-credit;
+                        title = "Ok im not gonna credit myself multiple times";
+                        weighting = 2%;
+                    }
+                }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+}
