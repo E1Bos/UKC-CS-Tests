@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * correct.
  *
  * @author lb851
- * @version 1.1
+ * @version 1.2
  */
 public class RunTest {
 
@@ -155,6 +155,37 @@ public class RunTest {
                         title = "Valid Class 2";
                         groups = 2;
                         }
+                }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void parseAllClassPermutations() {
+        String input = """
+                classes {
+                    class c1 {
+                        title = "Class 1";
+                        groups = 1;
+                    }
+
+                    class c2 {
+                        title = "Class 2";
+                        after = [L2];
+                    }
+
+                    class c3 {
+                        title = "Class 3";
+                        after = [L3];
+                        groups = 3;
+                    }
+
+                    class c4 {
+                        title = "Class 4";
+                        groups = 4;
+                        after = [L4];
+                    }
                 }
                 """;
         boolean expected = true;
