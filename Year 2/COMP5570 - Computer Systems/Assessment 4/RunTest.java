@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * correct.
  *
  * @author lb851
- * @version 1.2
+ * @version 1.3
  */
 public class RunTest {
 
@@ -332,6 +332,23 @@ public class RunTest {
     }
 
     @Test
+    public void parseAssessmentThenEmpty() {
+        String input = """
+                assessments {
+                    assessment a1 {
+                        type = assessment-test;
+                        title = "Does this test pass?";
+                        weighting = 2%;
+                    }
+                }
+
+                {}
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
     public void parseValidAssessmentWithAfter() {
         String input = """
                 assessments {
@@ -402,7 +419,7 @@ public class RunTest {
     }
 
     @Test
-    public void testLectureWithAssessment() {
+    public void testLectureWithAssessmentWrong() {
         String input = """
                 lectures {
                     lecture l1 {
@@ -418,12 +435,33 @@ public class RunTest {
                     }
                 }
                 """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void testLectureWithAssessmentRight() {
+        String input = """
+                assessments {
+                    assessment a1 {
+                        type = assessment-test;
+                        title = "Does this test pass?";
+                        weighting = 2%;
+                        after = [l1];
+                    }
+                }
+                lectures {
+                    lecture l1 {
+                        title = "Lecture 1";
+                    }
+                }
+                """;
         boolean expected = true;
         isExpectedValue(input, expected);
     }
 
     @Test
-    public void testLectureWithClass() {
+    public void testLectureWithClassWrong() {
         String input = """
                 lectures {
                     lecture l1 {
@@ -437,12 +475,31 @@ public class RunTest {
                     }
                 }
                 """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void testLectureWithClassRight() {
+        String input = """
+                classes {
+                    class c1 {
+                        title = "Class 1";
+                        after = [l1];
+                    }
+                }
+                lectures {
+                    lecture l1 {
+                        title = "Lecture 1";
+                    }
+                }
+                """;
         boolean expected = true;
         isExpectedValue(input, expected);
     }
 
     @Test
-    public void testAllValid() {
+    public void testAllValidWrongOrder() {
         String input = """
                 lectures {
                     lecture l1 {
@@ -466,6 +523,62 @@ public class RunTest {
                     }
                 }
                 """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void testAllValidWrongOrder2() {
+        String input = """
+                assessments {
+                    assessment a1 {
+                        type = assessment-test;
+                        title = "amazon shopping";
+                        weighting = 2%;
+                        after = [c1];
+                    }
+                }
+                lectures {
+                    lecture l1 {
+                        title = "Lecture 1";
+                    }
+                }
+                classes {
+                    class c1 {
+                        title = "Class 1";
+                        after = [l1];
+                    }
+                }
+
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+    
+    @Test
+    public void testAllValidCorrectOrder() {
+        String input = """
+                assessments {
+                    assessment a1 {
+                        type = assessment-test;
+                        title = "amazon shopping";
+                        weighting = 2%;
+                        after = [c1];
+                    }
+                }
+                classes {
+                    class c1 {
+                        title = "Class 1";
+                        after = [l1];
+                    }
+                }
+                lectures {
+                    lecture l1 {
+                        title = "Lecture 1";
+                    }
+                }
+
+                """;
         boolean expected = true;
         isExpectedValue(input, expected);
     }
@@ -473,28 +586,6 @@ public class RunTest {
     @Test
     public void testAllMultipleValid() {
         String input = """
-                lectures {
-                    lecture l1 {
-                        title = "Lecture 1";
-                    }
-
-                    lecture l2 {
-                        title = "Lecture 2";
-                    }
-                }
-
-                classes {
-                    class c1 {
-                        title = "Class 1";
-                        after = [l1];
-                    }
-
-                    class c2 {
-                        title = "Class 2";
-                        groups = 12;
-                    }
-                }
-
                 assessments {
                     assessment a1 {
                         type = assessment-test;
@@ -509,14 +600,17 @@ public class RunTest {
                         weighting = 212%;
                     }
                 }
-                """;
-        boolean expected = true;
-        isExpectedValue(input, expected);
-    }
+                classes {
+                    class c1 {
+                        title = "Class 1";
+                        after = [l1];
+                    }
 
-    @Test
-    public void testAllWithInvalid() {
-        String input = """
+                    class c2 {
+                        title = "Class 2";
+                        groups = 12;
+                    }
+                }
                 lectures {
                     lecture l1 {
                         title = "Lecture 1";
@@ -526,18 +620,14 @@ public class RunTest {
                         title = "Lecture 2";
                     }
                 }
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
 
-                classes {
-                    class c1 {
-                        title = "Missing after or groups";
-                    }
-
-                    class c2 {
-                        title = "Class 2";
-                        groups = 12;
-                    }
-                }
-
+    @Test
+    public void testAllWithInvalid() {
+        String input = """
                 assessments {
                     assessment a1 {
                         type = assessment-test;
@@ -550,6 +640,24 @@ public class RunTest {
                         type = test-credit;
                         title = "Ok im not gonna credit myself multiple times";
                         weighting = 2%;
+                    }
+                }
+                lectures {
+                    lecture l1 {
+                        title = "Lecture 1";
+                    }
+
+                    lecture l2 {
+                        title = "Lecture 2";
+                    }
+                }
+                classes {
+                    class c1 {
+                        title = "Missing after or groups";
+                    }
+                    class c2 {
+                        title = "Class 2";
+                        groups = 12;
                     }
                 }
                 """;
