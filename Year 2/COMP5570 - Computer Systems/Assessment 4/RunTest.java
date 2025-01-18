@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Passing these tests is not a guarantee that your solution is completely
  * correct.
  *
- * @author lb851
+ * @author lb851 & Sean Chan UWU
  * @version 1.3
  */
 public class RunTest {
@@ -36,6 +36,71 @@ public class RunTest {
                 """;
         boolean expected = true;
         isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void lecturesShouldNotBeEmpty() {
+        String input = """
+                lectures {
+                }
+
+                    """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void classesShouldNotBeEmpty() {
+        String input = """
+                classes {
+                }
+
+                    """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void shouldOnlyContain3Mods() {
+        String input = """
+                assessments {
+                    assessment A2 {
+                    type = in-class-test;
+                    title = "Hack Assembler";
+                    weighting = 10%;
+                    after = [A1, c2];
+                    }
+                }
+                classes {
+                    class c1 {
+                    title = "Prep for A1";
+                    groups = 14;
+                }
+                    class c2 {
+                    title = "Prep for A2";
+                    after = [A1, c1];
+                    groups = 14;
+                    }
+                }
+                lectures {
+                    lecture L1 {
+                    title = "Lecture 1";
+                    }
+                }
+                lectures {
+                    lecture L1 {
+                    title = "Lecture 1";
+                    }
+                }
+                lectures {
+                    lecture L1 {
+                    title = "Lecture 1";
+                    }
+                }
+                    """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+
     }
 
     @Test
@@ -554,7 +619,7 @@ public class RunTest {
         boolean expected = false;
         isExpectedValue(input, expected);
     }
-    
+
     @Test
     public void testAllValidCorrectOrder() {
         String input = """
@@ -715,7 +780,7 @@ public class RunTest {
                         weighting = 2%;
                         after = [c1];
                     }
-                }   
+                }
 
                 assessments {
                     assessment a1 {
@@ -724,7 +789,7 @@ public class RunTest {
                         weighting = 2%;
                         after = [c1];
                     }
-                } 
+                }
                 """;
         boolean expected = false;
         isExpectedValue(input, expected);
