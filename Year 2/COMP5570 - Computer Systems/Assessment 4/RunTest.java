@@ -41,10 +41,48 @@ public class RunTest {
     @Test
     public void lecturesShouldNotBeEmpty() {
         String input = """
-                lectures {
-                }
+                    lectures {
+                    }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
 
-                    """;
+    @Test
+    public void invalidLectureTitle() {
+        String input = """
+                lectures {
+                    Title = "idk";
+                }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void invalidAssessmentExtraComma() {
+        String input = """
+                assessment A4 {
+                    type = sean-on-the-beat;
+                    title = "IDK";
+                    weighting = 100%;
+                    after = [A1, A2, A3,];
+                }
+                        """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
+    public void invalidAssessmentNoPercentAdded() {
+        String input = """
+                assessment A4 {
+                    type = in-class-test;
+                    title = "Hack Assembler";
+                    weighting = 100;
+                    after = [A1, c2];
+                }
+                """;
         boolean expected = false;
         isExpectedValue(input, expected);
     }
@@ -100,7 +138,21 @@ public class RunTest {
                     """;
         boolean expected = false;
         isExpectedValue(input, expected);
+    }
 
+    @Test
+    public void noDupTitleLecture() {
+        String input = """
+                lectures {
+                    lecture COMP3030 {
+                    title = "Lecture 1";
+                    title = "Lecture 1";
+                    title = "Lecture 1";
+                    }
+                }
+                """;
+        boolean expected = false;
+        isExpectedValue(input, expected);
     }
 
     @Test
