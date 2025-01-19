@@ -60,6 +60,14 @@ public class RunTest {
     }
 
     @Test
+    public void emptyFile() {
+        String input = """
+                """;
+        boolean expected = true;
+        isExpectedValue(input, expected);
+    }
+
+    @Test
     public void invalidAssessmentExtraComma() {
         String input = """
                 assessment A4 {
